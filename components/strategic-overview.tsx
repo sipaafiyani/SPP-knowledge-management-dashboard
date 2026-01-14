@@ -6,32 +6,36 @@ import { Badge } from "@/components/ui/badge"
 
 const metrics = [
   {
-    title: "Total Stock Value",
-    value: "$2,450,000",
+    title: "Total Nilai Stok Bahan",
+    value: "Rp 245.000.000",
     change: "+12.5%",
     positive: true,
     icon: TrendingUp,
+    description: "Nilai total bahan baku & pendukung",
   },
   {
-    title: "Low Stock Alerts",
-    value: "23",
-    change: "Items below threshold",
+    title: "Efisiensi Bahan (Lean KM)",
+    value: "87%",
+    change: "Waste 13% (Target <10%)",
     positive: false,
     icon: AlertCircle,
+    description: "Persentase utilisasi bahan vs sisa potongan",
   },
   {
-    title: "Vendor Reliability Index",
+    title: "Indeks Keandalan Supplier",
     value: "8.7/10",
-    change: "+0.3 this month",
+    change: "Ketepatan waktu & kualitas warna",
     positive: true,
     icon: CheckCircle,
+    description: "Berdasarkan on-time delivery dan konsistensi",
   },
   {
-    title: "Knowledge Health Score",
+    title: "Skor Kesehatan Pengetahuan",
     value: "76%",
-    change: "Last updated 2 days ago",
+    change: "SOP & QC diperbarui 2 hari lalu",
     positive: true,
     icon: Activity,
+    description: "Tingkat kelengkapan dokumentasi tacit to explicit",
   },
 ]
 
@@ -51,6 +55,9 @@ export function StrategicOverview() {
               </div>
               <h3 className="text-sm text-muted-foreground mb-1">{metric.title}</h3>
               <p className="text-3xl font-bold text-card-foreground">{metric.value}</p>
+              {metric.description && (
+                <p className="text-xs text-muted-foreground mt-2">{metric.description}</p>
+              )}
             </Card>
           )
         })}
@@ -58,12 +65,12 @@ export function StrategicOverview() {
 
       {/* Recently Updated Knowledge */}
       <Card className="p-6 bg-card border-border">
-        <h3 className="text-lg font-semibold text-card-foreground mb-4">Recent Knowledge Updates</h3>
+        <h3 className="text-lg font-semibold text-card-foreground mb-4">Pembaruan Pengetahuan Terbaru (Tacit to Explicit)</h3>
         <div className="space-y-4">
           {[
-            { title: "SOP: Quality Assurance Process", updated: "2 hours ago" },
-            { title: "Lesson Learned: Vendor A delivery delays", updated: "1 day ago" },
-            { title: "Best Practice: Seasonal inventory planning", updated: "3 days ago" },
+            { title: "SOP: Teknik Jahit Obras untuk Kaos Rajut", updated: "2 jam lalu", type: "Sosialisasi" },
+            { title: "Lesson: Kain Katun Supplier A menyusut 5% setelah cuci", updated: "1 hari lalu", type: "Eksternalisasi" },
+            { title: "Best Practice: Pola potong efisien untuk seragam sekolah", updated: "3 hari lalu", type: "Kombinasi" },
           ].map((item, i) => (
             <div
               key={i}
@@ -71,9 +78,9 @@ export function StrategicOverview() {
             >
               <div>
                 <p className="font-medium text-card-foreground">{item.title}</p>
-                <p className="text-xs text-muted-foreground mt-1">{item.updated}</p>
+                <p className="text-xs text-muted-foreground mt-1">{item.updated} • SECI: {item.type}</p>
               </div>
-              <Badge variant="outline">Updated</Badge>
+              <Badge variant="outline">Diperbarui</Badge>
             </div>
           ))}
         </div>

@@ -9,25 +9,25 @@ interface HeaderProps {
 }
 
 const sectionTitles: Record<string, string> = {
-  overview: "Strategic Overview",
-  inventory: "Inventory Management",
-  vendors: "Vendor Intelligence",
-  knowledge: "Knowledge Base",
-  analytics: "Inventory Analytics",
+  overview: "Ikhtisar Strategis",
+  inventory: "Manajemen Inventaris",
+  vendors: "Intelijen Vendor",
+  knowledge: "Basis Pengetahuan",
+  analytics: "Analitik Inventaris",
 }
 
 export function Header({ activeSection }: HeaderProps) {
   return (
     <header className="border-b border-border bg-card h-16 flex items-center justify-between px-8">
       <div>
-        <h2 className="text-xl font-semibold text-card-foreground">{sectionTitles[activeSection] || "Dashboard"}</h2>
+        <h2 className="text-xl font-semibold text-card-foreground">{sectionTitles[activeSection] || "Dasbor"}</h2>
       </div>
 
       <div className="flex items-center gap-4">
         <div className="hidden md:block relative w-64">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Search..."
+            placeholder="Cari..."
             className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground"
           />
         </div>

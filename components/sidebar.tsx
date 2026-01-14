@@ -9,11 +9,11 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { id: "overview", label: "Dashboard", icon: LayoutDashboard },
-  { id: "inventory", label: "Inventory", icon: Package },
-  { id: "vendors", label: "Vendors", icon: Users },
-  { id: "knowledge", label: "Knowledge Base", icon: BookOpen },
-  { id: "analytics", label: "Analytics", icon: TrendingUp },
+  { id: "overview", label: "Dasbor", icon: LayoutDashboard },
+  { id: "inventory", label: "Inventaris", icon: Package },
+  { id: "vendors", label: "Vendor", icon: Users },
+  { id: "knowledge", label: "Basis Pengetahuan", icon: BookOpen },
+  { id: "analytics", label: "Analitik", icon: TrendingUp },
 ]
 
 export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
@@ -26,8 +26,8 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
             <BookOpen className="w-6 h-6 text-sidebar-primary-foreground" />
           </div>
           <div>
-            <h1 className="font-semibold text-sidebar-foreground">KM Hub</h1>
-            <p className="text-xs text-sidebar-foreground/60">Enterprise</p>
+            <h1 className="font-semibold text-sidebar-foreground">Hub MK</h1>
+            <p className="text-xs text-sidebar-foreground/60">Perusahaan</p>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
       <div className="p-4 border-t border-sidebar-border">
         <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
           <Settings className="w-5 h-5" />
-          <span className="font-medium">Settings</span>
+          <span className="font-medium">Pengaturan</span>
         </button>
       </div>
     </aside>

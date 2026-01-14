@@ -8,15 +8,15 @@ const stockTrendData = [
   { month: "Feb", value: 2250000 },
   { month: "Mar", value: 2180000 },
   { month: "Apr", value: 2320000 },
-  { month: "May", value: 2450000 },
+  { month: "Mei", value: 2450000 },
   { month: "Jun", value: 2380000 },
 ]
 
 const categoryData = [
-  { name: "Raw Materials", value: 850000 },
-  { name: "Components", value: 620000 },
-  { name: "Accessories", value: 520000 },
-  { name: "Electronics", value: 460000 },
+  { name: "Bahan Baku", value: 850000 },
+  { name: "Komponen", value: 620000 },
+  { name: "Aksesori", value: 520000 },
+  { name: "Elektronik", value: 460000 },
 ]
 
 export function InventoryAnalytics() {
@@ -25,7 +25,7 @@ export function InventoryAnalytics() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Stock Trend */}
         <Card className="p-6 bg-card border-border">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">Stock Value Trend</h3>
+          <h3 className="text-lg font-semibold text-card-foreground mb-4">Tren Nilai Stok</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={stockTrendData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
@@ -50,7 +50,7 @@ export function InventoryAnalytics() {
 
         {/* Category Distribution */}
         <Card className="p-6 bg-card border-border">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">Stock by Category</h3>
+          <h3 className="text-lg font-semibold text-card-foreground mb-4">Stok berdasarkan Kategori</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={categoryData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
@@ -71,10 +71,10 @@ export function InventoryAnalytics() {
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
         {[
-          { label: "Total Categories", value: "4" },
-          { label: "Avg Turnover", value: "6.2 weeks" },
-          { label: "YoY Growth", value: "+18.3%" },
-          { label: "Peak Month", value: "May" },
+          { label: "Total Kategori", value: "4" },
+          { label: "Rata-rata Perputaran", value: "6.2 minggu" },
+          { label: "Pertumbuhan YoY", value: "+18.3%" },
+          { label: "Bulan Puncak", value: "Mei" },
         ].map((stat, i) => (
           <Card key={i} className="p-4 bg-card border-border text-center">
             <p className="text-sm text-muted-foreground mb-2">{stat.label}</p>

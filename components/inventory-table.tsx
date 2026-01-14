@@ -9,35 +9,63 @@ import { KnowledgePanel } from "./knowledge-panel"
 const inventoryData = [
   {
     id: 1,
-    name: "Premium Steel Components",
-    category: "Raw Materials",
+    name: "Kain Katun Combed 30s",
+    category: "Bahan Utama",
     stock: 450,
     threshold: 200,
-    knowledge: { explicit: "Store in dry environment", tacit: "Supplier quality varies by season" },
+    unit: "meter",
+    knowledge: { 
+      explicit: "Simpan di ruangan ber-AC, hindari kelembaban tinggi", 
+      tacit: "Menyusut 3-5% setelah dicuci pertama kali. Tambahkan toleransi saat memotong pola" 
+    },
   },
   {
     id: 2,
-    name: "Aluminum Frames",
-    category: "Components",
-    stock: 120,
+    name: "Kain Drill Twill",
+    category: "Bahan Utama",
+    stock: 280,
     threshold: 150,
-    knowledge: { explicit: "Handle with care - oxidation risk", tacit: "Most orders arrive early with this vendor" },
+    unit: "meter",
+    knowledge: { 
+      explicit: "Material tahan lama untuk seragam kerja dan celana", 
+      tacit: "Supplier A memberikan konsistensi warna lebih baik untuk order >100m" 
+    },
   },
   {
     id: 3,
-    name: "Fasteners Kit",
-    category: "Accessories",
+    name: "Benang Jahit Polyester",
+    category: "Bahan Pendukung",
     stock: 890,
     threshold: 300,
-    knowledge: { explicit: "Organize by size (M3-M8)", tacit: "Bulk ordering reduces cost by 15%" },
+    unit: "cone",
+    knowledge: { 
+      explicit: "Atur berdasarkan kode warna, simpan dalam box kedap udara", 
+      tacit: "Benang lokal merk X sama kuatnya dengan import tapi 40% lebih murah" 
+    },
   },
   {
     id: 4,
-    name: "Electronic Sensors",
-    category: "Electronics",
+    name: "Kancing Plastik Variasi",
+    category: "Aksesoris",
     stock: 45,
     threshold: 100,
-    knowledge: { explicit: "Calibration required before use", tacit: "Lead time increased to 3 weeks" },
+    unit: "gross",
+    knowledge: { 
+      explicit: "Pisahkan berdasarkan ukuran dan warna", 
+      tacit: "Stok ini sering habis mendadak saat musim seragam sekolah (Juni-Juli)" 
+    },
+  },
+  {
+    id: 5,
+    name: "Kain Polyester Premium",
+    category: "Bahan Utama",
+    stock: 95,
+    threshold: 120,
+    unit: "meter",
+    knowledge: { 
+      explicit: "Material ringan untuk kemeja dan baju olahraga", 
+      tacit: "Hindari supplier B - warna mudah luntur setelah 3x cuci" 
+    },
   },
 ]
 
@@ -56,11 +84,11 @@ export function InventoryTable() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border bg-background">
-                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Item Name</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Category</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Stock Level</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Nama Bahan</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Kategori</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Stok</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Knowledge</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-muted-foreground">Pengetahuan</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +104,7 @@ export function InventoryTable() {
                           style={{ width: `${Math.min((item.stock / 1000) * 100, 100)}%` }}
                         />
                       </div>
-                      <span className="text-sm font-medium text-card-foreground">{item.stock}</span>
+                      <span className="text-sm font-medium text-card-foreground">{item.stock} {item.unit}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -85,7 +113,7 @@ export function InventoryTable() {
                         item.stock > item.threshold ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
                       }`}
                     >
-                      {item.stock > item.threshold ? "Optimal" : "Low Stock"}
+                      {item.stock > item.threshold ? "Optimal" : "Stok Rendah"}
                     </span>
                   </td>
                   <td className="px-6 py-4">

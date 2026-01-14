@@ -21,7 +21,7 @@ export function KnowledgePanel({ item, onClose }: KnowledgePanelProps) {
           <Card className="p-6 bg-background border-border">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="w-5 h-5 text-primary" />
-              <h3 className="font-semibold text-card-foreground">Explicit Knowledge</h3>
+              <h3 className="font-semibold text-card-foreground">Pengetahuan Eksplisit</h3>
             </div>
             <p className="text-sm text-muted-foreground">{item.knowledge.explicit}</p>
           </Card>
@@ -29,7 +29,7 @@ export function KnowledgePanel({ item, onClose }: KnowledgePanelProps) {
           <Card className="p-6 bg-background border-border">
             <div className="flex items-center gap-2 mb-4">
               <Users className="w-5 h-5 text-accent" />
-              <h3 className="font-semibold text-card-foreground">Tacit Knowledge</h3>
+              <h3 className="font-semibold text-card-foreground">Pengetahuan Tacit</h3>
             </div>
             <p className="text-sm text-muted-foreground">{item.knowledge.tacit}</p>
           </Card>
