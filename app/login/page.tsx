@@ -150,66 +150,6 @@ export default function LoginPage() {
     }
   }
 
-  const handleDemoLogin = async (role: "admin" | "staff") => {
-    setLoading(true)
-    setError("")
-
-    const demoUsers = {
-      admin: {
-        user: {
-          id: 1,
-          name: "Admin derras",
-          email: "admin",
-          role: "admin",
-          position: "System Administrator",
-          department: "IT",
-        },
-        permissions: {
-          dashboard: true,
-          inventaris: true,
-          analitik: true,
-          vendor: true,
-          pengetahuan: true,
-          users: true,
-          settings: true,
-        },
-      },
-      staff: {
-        user: {
-          id: 3,
-          name: "Staff Gudang",
-          email: "admin",
-          role: "staff",
-          position: "Warehouse Staff",
-          department: "Gudang",
-        },
-        permissions: {
-          dashboard: false,
-          inventaris: true,
-          analitik: false,
-          vendor: false,
-          pengetahuan: true,
-          users: false,
-          settings: false,
-        },
-      },
-    }
-
-    const selectedUser = demoUsers[role]
-
-    // Save demo auth data
-    localStorage.setItem("auth_token", "demo_token_" + Date.now())
-    localStorage.setItem("user", JSON.stringify(selectedUser.user))
-    localStorage.setItem("permissions", JSON.stringify(selectedUser.permissions))
-
-    // Show success modal
-    setLoggedInUser({
-      name: selectedUser.user.name,
-      role: role,
-    })
-    setShowSuccessModal(true)
-  }
-
   const handleModalClose = () => {
     setShowSuccessModal(false)
     setLoading(false)
@@ -317,43 +257,8 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* Demo Accounts */}
-          <div className="mt-6 pt-6 border-t border-gray-700">
-            <p className="text-xs text-gray-400 text-center mb-3">
-              🧪 Testing Mode - Kredensial Universal:
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => handleDemoLogin("admin")}
-                disabled={loading}
-                className="text-xs border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-              >
-                Admin
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => handleDemoLogin("staff")}
-                disabled={loading}
-                className="text-xs border-green-500/30 text-green-400 hover:bg-green-500/10"
-              >
-                Staff
-              </Button>
-            </div>
-            <p className="text-xs text-gray-500 text-center mt-3">
-              Email: <code className="text-green-400">admin</code> | Password: <code className="text-green-400">admin</code>
-            </p>
-            <p className="text-xs text-gray-600 text-center mt-1">
-              (Sistem akan auto-select role berdasarkan button yang diklik)
-            </p>
-          </div>
-
           {/* Footer */}
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <p className="text-xs text-gray-500">
               © 2026 derras - Knowledge Management System
             </p>
