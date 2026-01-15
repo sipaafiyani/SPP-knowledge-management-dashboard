@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Plus, MessageSquare } from "lucide-react"
 import { useState } from "react"
 
-const lessonsData = [
+const initialLessonsData = [
   {
     id: 1,
     title: "Kain katun menyusut 5% setelah pencucian pertama",
@@ -53,6 +53,42 @@ const lessonsData = [
 
 export function LessonsLearned() {
   const [showForm, setShowForm] = useState(false)
+  const [lessons, setLessons] = useState(initialLessonsData)
+  const [newLesson, setNewLesson] = useState({
+    title: "",
+    solution: "",
+    category: "Tacit to Explicit",
+    impact: "Sedang",
+    seciType: "Eksternalisasi",
+  })
+
+  const handleSaveLesson = () => {
+    if (newLesson.title.trim() === "" || newLesson.solution.trim() === "") {
+      alert("Judul dan solusi wajib diisi!")
+      return
+    }
+
+    const lesson = {
+      id: lessons.length + 1,
+      title: newLesson.title,
+      solution: newLesson.solution,
+      category: newLesson.category,
+      impact: newLesson.impact,
+      seciType: newLesson.seciType,
+      author: "Anda",
+      date: "Baru saja",
+    }
+
+    setLessons([lesson, ...lessons])
+    setNewLesson({
+      title: "",
+      solution: "",
+      category: "Tacit to Explicit",
+      impact: "Sedang",
+      seciType: "Eksternalisasi",
+    })
+    setShowForm(false)
+  }
 
   return (
     <div className="p-8">
@@ -67,16 +103,68 @@ export function LessonsLearned() {
         <Card className="p-6 bg-card border-border mb-6">
           <h3 className="text-lg font-semibold text-card-foreground mb-4">Catat Pengetahuan Baru (SECI Model)</h3>
           <div className="space-y-4">
-            <Input
-              placeholder="Contoh: Teknik jahit lubang kancing yang lebih kuat..."
-              className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-            />
-            <Textarea
-              placeholder="Jelaskan masalah, solusi, dan dampaknya terhadap produksi..."
-              className="bg-input border-border text-foreground placeholder:text-muted-foreground min-h-24"
-            />
+            <div>
+              <label className="text-sm font-medium text-card-foreground mb-2 block">Judul Pelajaran</label>
+              <Input
+                placeholder="Contoh: Teknik jahit lubang kancing yang lebih kuat..."
+                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                value={newLesson.title}
+                onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-card-foreground mb-2 block">Solusi/Penjelasan</label>
+              <Textarea
+                placeholder="Jelaskan masalah, solusi, dan dampaknya terhadap produksi..."
+                className="bg-input border-border text-foreground placeholder:text-muted-foreground min-h-24"
+                value={newLesson.solution}
+                onChange={(e) => setNewLesson({ ...newLesson, solution: e.target.value })}
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="text-sm font-medium text-card-foreground mb-2 block">Kategori</label>
+                <select
+                  className="w-full px-3 py-2 bg-input border border-border rounded-md text-foreground"
+                  value={newLesson.category}
+                  onChange={(e) => setNewLesson({ ...newLesson, category: e.target.value })}
+                >
+                  <option value="Tacit to Explicit">Tacit to Explicit</option>
+                  <option value="Knowledge-Based View">Knowledge-Based View</option>
+                  <option value="Sosialisasi">Sosialisasi</option>
+                  <option value="Lean KM">Lean KM</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-card-foreground mb-2 block">Tipe SECI</label>
+                <select
+                  className="w-full px-3 py-2 bg-input border border-border rounded-md text-foreground"
+                  value={newLesson.seciType}
+                  onChange={(e) => setNewLesson({ ...newLesson, seciType: e.target.value })}
+                >
+                  <option value="Sosialisasi">Sosialisasi (Tacit → Tacit)</option>
+                  <option value="Eksternalisasi">Eksternalisasi (Tacit → Explicit)</option>
+                  <option value="Kombinasi">Kombinasi (Explicit → Explicit)</option>
+                  <option value="Internalisasi">Internalisasi (Explicit → Tacit)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-card-foreground mb-2 block">Dampak</label>
+                <select
+                  className="w-full px-3 py-2 bg-input border border-border rounded-md text-foreground"
+                  value={newLesson.impact}
+                  onChange={(e) => setNewLesson({ ...newLesson, impact: e.target.value })}
+                >
+                  <option value="Tinggi">Tinggi</option>
+                  <option value="Sedang">Sedang</option>
+                  <option value="Rendah">Rendah</option>
+                </select>
+              </div>
+            </div>
             <div className="flex gap-2">
-              <Button className="bg-primary hover:bg-primary/90">Simpan Pengetahuan</Button>
+              <Button onClick={handleSaveLesson} className="bg-primary hover:bg-primary/90">
+                Simpan Pengetahuan
+              </Button>
               <Button variant="outline" onClick={() => setShowForm(false)}>
                 Batal
               </Button>
@@ -86,7 +174,7 @@ export function LessonsLearned() {
       )}
 
       <div className="space-y-4">
-        {lessonsData.map((lesson) => (
+        {lessons.map((lesson) => (
           <Card key={lesson.id} className="p-6 bg-card border-border hover:border-border/80 transition-colors">
             <div className="flex items-start justify-between mb-3">
               <div>

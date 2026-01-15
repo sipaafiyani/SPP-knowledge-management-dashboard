@@ -1,7 +1,8 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { LayoutDashboard, Package, Users, BookOpen, TrendingUp, Settings } from "lucide-react"
+import { LayoutDashboard, Package, Users, BookOpen, TrendingUp, Settings, LogOut, User } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 
 interface SidebarProps {
   activeSection: string
@@ -9,14 +10,20 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { id: "overview", label: "Dasbor", icon: LayoutDashboard },
-  { id: "inventory", label: "Inventaris", icon: Package },
-  { id: "vendors", label: "Vendor", icon: Users },
-  { id: "knowledge", label: "Basis Pengetahuan", icon: BookOpen },
-  { id: "analytics", label: "Analitik", icon: TrendingUp },
+  { id: "overview", label: "Dasbor", icon: LayoutDashboard, permission: "dashboard" },
+  { id: "inventory", label: "Inventaris", icon: Package, permission: "inventaris" },
+  { id: "vendors", label: "Vendor", icon: Users, permission: "vendor" },
+  { id: "knowledge", label: "Basis Pengetahuan", icon: BookOpen, permission: "pengetahuan" },
+  { id: "analytics", label: "Analitik", icon: TrendingUp, permission: "analitik" },
 ]
 
 export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
+  const { user, permissions, logout, hasPermission } = useAuth()
+
+  // Filter navigation based on permissions
+  const filteredNavigation = navigation.filter((item) =>
+    hasPermission(item.permission as any)
+  )
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
       {/* Logo */}
@@ -26,7 +33,7 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
             <BookOpen className="w-6 h-6 text-sidebar-primary-foreground" />
           </div>
           <div>
-            <h1 className="font-semibold text-sidebar-foreground">Hub MK</h1>
+            <h1 className="font-semibold text-sidebar-foreground">derras</h1>
             <p className="text-xs text-sidebar-foreground/60">Perusahaan</p>
           </div>
         </div>
@@ -34,7 +41,7 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
-        {navigation.map((item) => {
+        {filteredNavigation.map((item) => {
           const Icon = item.icon
           return (
             <button
@@ -54,11 +61,34 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
         })}
       </nav>
 
-      {/* Settings Footer */}
-      <div className="p-4 border-t border-sidebar-border">
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
-          <Settings className="w-5 h-5" />
-          <span className="font-medium">Pengaturan</span>
+      {/* User Profile & Logout */}
+      <div className="p-4 border-t border-sidebar-border space-y-2">
+        {/* User Info */}
+        <div className="px-4 py-3 bg-sidebar-accent/30 rounded-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+              <User className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-sidebar-foreground truncate">
+                {user?.name || "Guest"}
+              </p>
+              <p className="text-xs text-sidebar-foreground/60 truncate">
+                {user?.role === "admin" && "Administrator"}
+                {user?.role === "manager" && "Manager"}
+                {user?.role === "staff" && "Staff"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Logout Button */}
+        <button
+          onClick={logout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="font-medium">Logout</span>
         </button>
       </div>
     </aside>

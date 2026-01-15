@@ -1,22 +1,22 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts"
 
 const stockTrendData = [
-  { month: "Jan", value: 2100000 },
-  { month: "Feb", value: 2250000 },
-  { month: "Mar", value: 2180000 },
-  { month: "Apr", value: 2320000 },
-  { month: "Mei", value: 2450000 },
-  { month: "Jun", value: 2380000 },
+  { month: "Jan", value: 180000000, demand: "Rendah" },
+  { month: "Feb", value: 195000000, demand: "Rendah" },
+  { month: "Mar", value: 210000000, demand: "Mulai Naik" },
+  { month: "Apr", value: 235000000, demand: "Tinggi" },
+  { month: "Mei", value: 265000000, demand: "Peak (Lebaran)" },
+  { month: "Jun", value: 280000000, demand: "Peak (Seragam)" },
 ]
 
 const categoryData = [
-  { name: "Bahan Baku", value: 850000 },
-  { name: "Komponen", value: 620000 },
-  { name: "Aksesori", value: 520000 },
-  { name: "Elektronik", value: 460000 },
+  { name: "Kain Katun", value: 95000000, color: "#3b82f6" },
+  { name: "Kain Polyester", value: 72000000, color: "#a855f7" },
+  { name: "Benang & Aksesoris", value: 48000000, color: "#f59e0b" },
+  { name: "Kain Drill", value: 40000000, color: "#10b981" },
 ]
 
 export function InventoryAnalytics() {
@@ -53,18 +53,62 @@ export function InventoryAnalytics() {
           <h3 className="text-lg font-semibold text-card-foreground mb-4">Stok berdasarkan Kategori</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={categoryData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
-              <XAxis dataKey="name" stroke="hsl(var(--color-muted-foreground))" />
-              <YAxis stroke="hsl(var(--color-muted-foreground))" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.2} />
+              <XAxis 
+                dataKey="name" 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={12}
+                angle={-15}
+                textAnchor="end"
+                height={80}
+              />
+              <YAxis 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={12}
+                tickFormatter={(value) => `${(value / 1000000).toFixed(0)}jt`}
+              />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--color-card))",
-                  border: "1px solid hsl(var(--color-border))",
+                  backgroundColor: "hsl(var(--card))",
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "8px",
+                  color: "hsl(var(--card-foreground))",
                 }}
+                labelStyle={{ color: "hsl(var(--card-foreground))", fontWeight: 600 }}
+                formatter={(value: number) => [
+                  `Rp ${(value / 1000000).toFixed(1)} juta`,
+                  "Nilai Stok"
+                ]}
+                cursor={{ fill: "hsl(var(--accent))", opacity: 0.1 }}
               />
-              <Bar dataKey="value" fill="hsl(var(--color-primary))" />
+              <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+                {categoryData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
+          
+          {/* Custom Legend with KM Context */}
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {categoryData.map((category) => (
+              <div key={category.name} className="flex items-center gap-2">
+                <div 
+                  className="w-4 h-4 rounded" 
+                  style={{ backgroundColor: category.color }}
+                />
+                <span className="text-xs text-muted-foreground">{category.name}</span>
+              </div>
+            ))}
+          </div>
+          
+          {/* KM Insight Badge */}
+          <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+            <p className="text-xs text-blue-400">
+              <strong>💡 KM Insight:</strong> Visualisasi berbasis warna mempercepat interpretasi data stok (Model 4I) 
+              dan membantu organizing knowledge untuk pengambilan keputusan strategis.
+            </p>
+          </div>
         </Card>
       </div>
 
